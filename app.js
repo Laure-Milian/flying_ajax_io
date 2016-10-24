@@ -1,4 +1,4 @@
-/*(function() {
+(function() {
 
 	var app = {
 
@@ -7,24 +7,29 @@
 		},
 		
 		listeners : function() {
-			$("button").on("click", this.getData.bind(this));
+			$("#ajaxBtn").on("click", this.getData.bind(this));
+			$("#weatherBtn").on('click', this.getMeteo.bind(this));
 		},
 
 		getData : function() {
 			var url = "http://192.168.1.21:3000/places";
 			var data = $.ajax(url)
-			.done(app.ajaxDone)
-			.fail(app.ajaxFail)
-			.always(app.ajaxAlways);
+				.done(app.ajaxDone)
+				.fail(app.ajaxFail)
+				.always(app.ajaxAlways);
 		},
 
-		ajaxDone : function(places) {
-			var listPlaces = places;
-			//ajout du nouveau code par Zélia
+		ajaxDone : function(response) {
+
+			var listPlaces = response.places;
+			console.log(listPlaces);
+
 			for(i = 0; i < listPlaces.length; i++){
-				var place = listPlaces[i];
-				console.log(place);
-				$('ul').append('<li>' + listPlaces + '</li>');
+				$('ul').append('<li>' + listPlaces[i].nom + '</li>');
+
+				if (listPlaces[i].nom === "IoT Valley") {
+					$("#troll").html(listPlaces[i].password);
+				}
 			}
 		},
 
@@ -33,23 +38,31 @@
 		},
 
 		ajaxAlways : function() {
-			
+			console.log("complete");
+		},
+
+		getMeteo : function() {
+			$.ajax('http://api.openweathermap.org/data/2.5/weather?id=2972315&APPID=e05300d9bacf77c059ab39927fd4909d&units=metric')
+				.done(this.meteoDone)
+				.fail(this.meteoFail)
+				.always(this.meteoAlways)
+		},
+
+		meteoDone : function(response) {
+			$('#temp').html("La température est : " + response.main.temp);
+			$('#descriptionMeteo').html("Description de la météo : " + response.weather[0].description);
+		},
+
+		meteoFail : function() {
+			console.log("fail");
+		},
+
+		meteoAlways : function() {
+			console.log("complete");
 		}
 
 	}
 
 	app.init();
 
-})();*/
-
-
-$("#weatherBtn").click(function(){
-	console.log("click");
-	$.ajax({
-		url : "api.openweathermap.org/data/2.5/weather?q=Toulouse",
-		type : "GET",
-		sucess : function(){}
-
-	});
-
-});
+})();
