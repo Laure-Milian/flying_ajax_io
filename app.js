@@ -1,4 +1,4 @@
-(function() {
+/*(function() {
 
 	var app = {
 
@@ -13,9 +13,9 @@
 		getData : function() {
 			var url = "http://192.168.1.21:3000/places";
 			var data = $.ajax(url)
-						.done(app.ajaxDone)
-						.fail(app.ajaxFail)
-						.always(app.ajaxAlways);
+			.done(app.ajaxDone)
+			.fail(app.ajaxFail)
+			.always(app.ajaxAlways);
 		},
 
 		ajaxDone : function(places) {
@@ -33,11 +33,23 @@
 		},
 
 		ajaxAlways : function() {
-			console.log("always");
+			
 		}
 
 	}
 
-app.init();
+	app.init();
 
-})();
+})();*/
+
+
+$("#weatherBtn").click(function(){
+	console.log("click");
+	$.ajax({
+		url : "api.openweathermap.org/data/2.5/weather?q=Toulouse",
+		type : "GET",
+		sucess : function(){}
+
+	});
+
+});
