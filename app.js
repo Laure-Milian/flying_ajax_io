@@ -13,19 +13,19 @@
 		getData : function() {
 			var url = "http://192.168.1.21:3000/places";
 			var data = $.ajax(url)
-						.done(this.ajaxDone.bind(this));//unexpected token
-						.fail(app.ajaxFail);
+						.done(app.ajaxDone)
+						.fail(app.ajaxFail)
 						.always(app.ajaxAlways);
 		},
 
 		ajaxDone : function(places) {
-			//Afficher les places dans la console -> marche
-			var this.listPlaces = places;
-			console.log(this.listPlaces);
-			for(var i= 0; i < this.listPlaces.length; i++);
-				console.log(listPlaces[i]); //undefined
-			//Afficher les places dans la page -> ne marche pas, rep : il faut créer des <li> à l'interieur de<ul> non?		
-			$('li').append(listPlaces);
+			var listPlaces = places;
+			//ajout du nouveau code par Zélia
+			for(i = 0; i < listPlaces.length; i++){
+				var place = listPlaces[i];
+				console.log(place);
+				$('ul').append('<li>' + listPlaces + '</li>');
+			}
 		},
 
 		ajaxFail : function() {
